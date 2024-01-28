@@ -23,6 +23,8 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
 
+import { LuLoader2 } from "react-icons/lu";
+
 export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -39,7 +41,7 @@ export const LoginForm = () => {
   function onSubmit(values: z.infer<typeof LoginSchema>) {
     setError("");
     setSuccess("");
-    
+
     startTransition(() => {
       login(values).then((data) => {
         setError(data.error);
@@ -98,6 +100,7 @@ export const LoginForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
+            {isPending && <LuLoader2 className="w-5 h-5 mr-2 animate-spin" />}
             Login
           </Button>
         </form>

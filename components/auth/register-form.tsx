@@ -21,6 +21,8 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { register } from "@/actions/register";
 
+import { LuLoader2 } from "react-icons/lu";
+
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -122,6 +124,7 @@ export const RegisterForm = () => {
             type="submit"
             className="w-full"
           >
+            {isPending && <LuLoader2 className="w-5 h-5 mr-2 animate-spin" />}
             Create an account
           </Button>
         </form>

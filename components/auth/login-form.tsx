@@ -1,10 +1,11 @@
 "use client";
 
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,12 @@ import { login } from "@/actions/login";
 import { LuLoader2 } from "react-icons/lu";
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with different provider!"
+      : "";
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -45,7 +52,8 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values).then((data) => {
         setError(data.error);
-        setSuccess(data.success);
+        // TODO: Add when we add 2FA
+        // setSuccess(data.success);
       });
     });
   }
@@ -97,7 +105,7 @@ export const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
             {isPending && <LuLoader2 className="w-5 h-5 mr-2 animate-spin" />}

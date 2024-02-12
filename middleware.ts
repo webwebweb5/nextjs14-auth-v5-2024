@@ -10,6 +10,7 @@ import {
 
 const { auth } = NextAuth(authConfig);
 
+// Route manager (Public & Private route)
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;

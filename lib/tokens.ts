@@ -56,7 +56,7 @@ export const generateVerificationToken = async (email: string) => {
 
 export const generateTwoFactorToken = async (email: string) => {
   const token = crypto.randomInt(100_000, 1_000_000).toString();
-  // expired in 15 minutes
+  // expired in 5 minutes
   const expires = new Date(new Date().getTime() + 5 * 60 * 1000);
 
   const existingToken = await getTwoFactorTokenByEmail(email);
